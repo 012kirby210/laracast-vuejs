@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Laracast - Vuejs</title>
+    <script src="https://unpkg.com/vue@3.2.33"></script>
+</head>
+<body>
+    <div id="app">
+        <p>
+            <input type="text" v-model="greeting">
+        </p>
+        <p>{{ greeting }} ({{ greeting.length}})</p>
+    </div>
+<script>
+    Vue.createApp({
+        data() {
+            return {
+                greeting: "hello work"
+            };
+        },
+        mounted() {
+            setTimeout( () => this.greeting = "Change", 3000)
+        }
+    }).mount("#app");
+</script>
+</body>
+</html>
