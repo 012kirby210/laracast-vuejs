@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -7,41 +7,65 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Laracast - Vuejs</title>
     <script src="https://unpkg.com/vue@3.2.33"></script>
-    <style>
-        html,body{
-            height: 100%;
-        }
-
-        body {
-            display: grid;
-            place-items: center;
-        }
-
-        .text-red {
-            color: red;
-        }
-        .text-green {
-            color: green;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="h-full grid place-items-center">
     <div id="app">
-        <button :class="active ? 'text-green' : 'text-red' "  @click="toggle">click me</button>
+        <section v-show="inProgressAssignements.length">
+            <h2 class="font-bold mb-2">In progres</h2>
+            <ul>
+                <li
+                        v-for="assignement in assignements.filter( a => !a.complete)"
+                        :key="assignement.id"
+                >
+                    <label>
+                        {{assignement.name}}
+                        <input type="checkbox" v-model="assignement.complete"/>
+                    </label>
+                </li>
+            </ul>
+        </section>
+
+        <section v-if="completedAssignements.length" class="mt-8">
+            <h2 class="font-bold mb-2">Completed</h2>
+            <ul>
+                <li
+                        v-for="assignement in assignements.filter( a => a.complete)"
+                        :key="assignement.id"
+                >
+                    <label>
+                        {{assignement.name}}
+                        <input type="checkbox" v-model="assignement.complete"/>
+                    </label>
+                </li>
+            </ul>
+        </section>
     </div>
 <script>
-    Vue.createApp({
+
+    let app = {
+
         data() {
             return {
-                active: false
-            };
-        },
-        methods: {
-            toggle() {
-                this.active = !this.active;
+              assignements: [
+                  { name: 'Fishish-project', complete: false, id: 1 },
+                  { name: 'Read chapter 4', complete: false, id: 2 },
+                  { name: 'Turn in Homework', complete: false, id: 3 }
+              ]
             }
+        },
+
+        computed: {
+            completedAssignements() {
+                return this.assignements.filter( a => a.complete)
+            },
+            inProgressAssignements() {
+                return this.assignements.filter( a => !a.complete)
+            },
         }
-    }).mount("#app");
+    };
+
+    Vue.createApp(app).mount("#app");
 </script>
 </body>
 </html>
