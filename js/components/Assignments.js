@@ -4,11 +4,17 @@ import AssignmentCreate from './AssignmentCreate.js';
 export default {
     components: { AssignmentList, AssignmentCreate },
     template: `
-        <section class="space-y-4">
-            <AssignmentList :assignments="filters.inProgress" sectionTitle="In progress"></AssignmentList>
-            <AssignmentList :assignments="filters.completed" sectionTitle="Completed"></AssignmentList>
-            <AssignmentCreate @add="add"></AssignmentCreate>
-            
+        <section class="gap-8 flex flex-row items-start">
+            <AssignmentList :assignments="filters.inProgress" sectionTitle="In progress">
+                <AssignmentCreate @add="add"></AssignmentCreate>
+            </AssignmentList>
+            <AssignmentList 
+                v-show="showCompleted"
+                :assignments="filters.completed" 
+                sectionTitle="Completed"
+                can-toggle
+                @toggle="showCompleted = !showCompleted"   
+            ></AssignmentList>
         </section>
     `,
     created() {
@@ -18,9 +24,8 @@ export default {
     },
     data() {
         return {
-            assignments: [
-
-            ],
+            assignments: [],
+            showCompleted: true,
         }
     },
 
