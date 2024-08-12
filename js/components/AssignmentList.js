@@ -9,9 +9,8 @@ export default {
         <span>({{assignments.length}})</span>
         </h2>
         <AssignmentTags 
+        v-model:currentTag="currentTag"
         :initial-tags="this.assignments.map( a => a.tag )"
-        :selected-tag="selectedTag"
-        @select-tag="selectedTag = $event"
         ></AssignmentTags>
         <ul class="border border-gray-600 divide-y divide-gray-600 mt-6">
             <Assignment 
@@ -28,15 +27,15 @@ export default {
     },
     data() {
       return {
-          selectedTag: 'all'
+          currentTag: 'all'
       }
     },
     computed: {
         filteredAssignements(){
-            if ('all' === this.selectedTag){
+            if ('all' === this.currentTag){
                 return this.assignments;
             }
-            return this.assignments.filter( a => a.tag === this.selectedTag);
+            return this.assignments.filter( a => a.tag === this.currentTag);
         }
     }
 }
