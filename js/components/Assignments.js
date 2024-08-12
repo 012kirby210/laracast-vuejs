@@ -11,12 +11,15 @@ export default {
             
         </section>
     `,
+    created() {
+      fetch('http://localhost:3000/assignments')
+          .then(response => response.json())
+          .then(data => this.assignments = data);
+    },
     data() {
         return {
             assignments: [
-                { name: 'Fishish-project', complete: false, id: 1, tag: 'math' },
-                { name: 'Read chapter 4', complete: false, id: 2, tag: 'science' },
-                { name: 'Turn in Homework', complete: false, id: 3, tag: 'math' }
+
             ],
         }
     },
